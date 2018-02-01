@@ -1,4 +1,5 @@
 *.simg
 *.img
 *.swp
+snakemake
 .snakemake/*

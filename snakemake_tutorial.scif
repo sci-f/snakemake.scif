@@ -12,14 +12,15 @@
     make
     mv bwa ../bin
 %apphelp bwa
-    "Burrows-Wheeler Aligner"
+    Burrows-Wheeler Aligner
 %apprun bwa
-    cd /scif/data
-    bwa "$@"
+    cd $SCIF_DATA
+    exec bwa "$@"
 %applabels bwa
     VERSION 0.7.17
 %appenv bwa
-    export TEST="test"
+    TEST=test
+    export TEST
 %apptest bwa
     bwa "$@"
 
@@ -36,29 +37,21 @@
     rm -r samtools-1.6
     rm samtools-1.6.tar.bz2
 %apphelp samtools
-    "Samtools"
+    Samtools
 %apprun samtools
-    cd /scif/data
-    samtools "$@"
+    cd $SCIF_DATA
+    exec samtools "$@"
 %applabels samtools
     VERSION 1.6
 %appenv samtools
-    export TEST="test"
+    TEST=test
+    export TEST
 %apptest samtools
-    samtools
+    exec samtools
 
-
-%appinstall snakemake
-    
 %apphelp snakemake
-    "Snakemake"
-
+    Snakemake
 %apprun snakemake
     exec snakemake "$@"
-
 %applabels snakemake
     VERSION 4.4.0
-
-%appenv snakemake
-
-%apptest snakemake
