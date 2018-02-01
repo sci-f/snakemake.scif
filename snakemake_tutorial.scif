@@ -18,15 +18,13 @@
     exec bwa "$@"
 %applabels bwa
     VERSION 0.7.17
-%appenv bwa
-    TEST=test
-    export TEST
 %apptest bwa
     bwa "$@"
 
 %appinstall samtools
     apt-get -y install wget libbz2-dev zlib1g-dev xz-utils liblzma-dev
     apt-get -y install libncurses5-dev
+    # samtools
     wget https://github.com/samtools/samtools/releases/download/1.6/samtools-1.6.tar.bz2
     tar xvjf samtools-1.6.tar.bz2
     cd samtools-1.6
@@ -36,22 +34,41 @@
     cd ..
     rm -r samtools-1.6
     rm samtools-1.6.tar.bz2
+    # bcftools
+    wget https://github.com/samtools/bcftools/releases/download/1.6/bcftools-1.6.tar.bz2
+    tar xvjf bcftools-1.6.tar.bz2
+    cd bcftools-1.6
+    ./configure --without-curses --prefix=$SCIF_APPROOT
+    make
+    make install
+    cd ..
+    rm -r bcftools-1.6
+    rm bcftools-1.6.tar.bz2
 %apphelp samtools
-    Samtools
+    This app provides Samtools suite, consisting of Samtools and BCFtools 
 %apprun samtools
     cd $SCIF_DATA
     exec samtools "$@"
 %applabels samtools
     VERSION 1.6
-%appenv samtools
-    TEST=test
-    export TEST
+    URL http://www.htslib.org/
 %apptest samtools
     exec samtools
 
+%appinstall snakemake
 %apphelp snakemake
-    Snakemake
+    Run snakemake. The workflow is defined by a Snakefile that should be located in the $SCIF_APPDATA folder.
+    This app does not provide snakemake itself, because it is already installed in the Singularity/Docker container.
+    But it would be easy to install snakemake also in the app context.
 %apprun snakemake
+    cd $SCIF_APPDATA
     exec snakemake "$@"
-%applabels snakemake
-    VERSION 4.4.0
+
+%appinstall graphviz_create_dag
+    apt-get -y install graphviz
+%apphelp graphviz_create_dag
+    This app creates a directed acyclic graph representation of a Snakemake workflow execution.
+    The app takes three arguments: The directory of the Snakefile, the target file and the output filename.
+%apprun graphviz_create_dag
+    cd $1
+    snakemake --dag $2 | dot -Tsvg > $SCIF_DATA/$3

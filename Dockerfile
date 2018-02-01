@@ -12,6 +12,7 @@ RUN apt-get -y install build-essential git
 
 RUN /opt/conda/bin/pip install scif && \
     /opt/conda/bin/pip install snakemake==4.4.0 && \
+    /opt/conda/bin/pip install docutils==0.14 && \
     /opt/conda/bin/scif install /snakemake_tutorial.scif
 
 ENTRYPOINT ["scif"]
