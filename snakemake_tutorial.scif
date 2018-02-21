@@ -61,8 +61,7 @@
     This app does not provide snakemake itself, because it is already installed in the Singularity/Docker container.
     But it would be easy to install snakemake also in the app context.
 %apprun snakemake
-    cd $SCIF_APPDATA
-    exec snakemake "$@"
+    exec /opt/conda/bin/snakemake "$@"
 
 %appinstall graphviz_create_dag
     apt-get -y install graphviz
@@ -71,4 +70,4 @@
     The app takes three arguments: The directory of the Snakefile, the target file and the output filename.
 %apprun graphviz_create_dag
     cd $1
-    snakemake --dag $2 | dot -Tsvg > $SCIF_DATA/$3
+    /opt/conda/bin/snakemake --dag $2 | dot -Tsvg > $SCIF_DATA/$3

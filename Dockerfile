@@ -6,7 +6,7 @@ ADD snakemake_tutorial.scif /
 
 ENV PATH /opt/conda/bin:$PATH
 
-RUN apt-get -y install build-essential git
+RUN apt-get update && apt-get -y install build-essential git
 
 # Install scif, snakemake
 
