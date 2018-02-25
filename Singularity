@@ -5,6 +5,8 @@ From: continuumio/miniconda3
 
 %files
     snakemake_tutorial.scif
+    Snakefile
+    config.yaml
 
 %environment
     PATH=/opt/conda/bin:$PATH

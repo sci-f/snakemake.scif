@@ -9,6 +9,7 @@ This repository implements the SnakeMake tutorial workflow and uses the Scientif
  - [Docker](https://docs.docker.com/install/)
  - [Singularity](http://singularity.lbl.gov/install-linux)
  - [Charliecloud](https://hpc.github.io/charliecloud/install.html#manual-build-and-install)
+ - [runc](https://github.com/opencontainers/runc)
 
 The following container technologies don't have user friendly build clients available (but are used by admins successfully in their respective locations!).
 
@@ -17,7 +18,6 @@ The following container technologies don't have user friendly build clients avai
 and the following containers had various bugs, or I just couldn't figure it out from the documentation available.
 
  - [shifter](https://github.com/NERSC/Shifter-Tutorial/tree/master/examples/shifter-in-a-box)
- - [runc](https://github.com/opencontainers/runc)
 
 We will take the following format in each section, to show the same command for each
 container technology, followed by the output that each results in.
@@ -48,15 +48,32 @@ ch-tar2dir /var/tmp/snakemake.ch.tar.gz /var/tmp
 ```
 mkdir -p /tmp/runc/rootfs
 sudo singularity build --sandbox /tmp/runc/rootfs snakemake
-#sudo chown -R vanessa /tmp/runc/rootfs
+
+# I'm not sure if this is needed, but I did it.
+sudo chown -R vanessa /tmp/runc/rootfs
 cd /tmp/runc
-runc spec --rootless
-ls
+runc spec --rootless --bundle /tmp/runc
+ls /tmp/runc
 config.json  rootfs
-runc --root /tmp/runc run snakmake.runc
-# TODO: need to change config.json to get this working
-# https://github.com/opencontainers/runc/issues/1732#issuecomment-368139286
 ```
+
+At this point we need to customize the config.json to allow for specific mounts, 
+and add the `/opt/conda/bin` to the `$PATH` to find the scif executable.
+
+```
+"env": ["PATH=/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TERM=xterm"
+       ],
+...
+
+	{
+		"destination": "/scif/data",
+		"type": "bind",
+                "options": ["bind"],
+		"source": "/home/vanessa/Documents/Dropbox/Code/scif/examples/snakemake.scif/data"
+	},
+```
+
 
 **shifter**
 
@@ -145,6 +162,22 @@ export PATH=/opt/conda/bin:$PATH
 snakemake all
 ```
 
+**Inside container, runc**
+
+The complete config file can be seen in [configs/runc-config-interactive.json].
+This interactive version uses a shell entrypoint, and then runs scif. If the Snakemake and config.yaml
+aren't found in the data directory, they are copied there from the container snakemake application.
+
+```
+runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc
+# which scif
+/opt/conda/bin/scif
+# scif run snakemake all
+[snakemake] executing /bin/bash /scif/apps/snakemake/scif/runscript all
+...
+Complete log: /scif/data/.snakemake/log/2018-02-25T180544.725734.snakemake.log
+```
+
 **Inside container, shifter**
 
 Note that we are working in a container that has had the build step done (as shown above to pull)
@@ -197,6 +230,41 @@ ch-run --cd $PWD -b data:/scif/data /var/tmp/snakemake.ch -- /opt/conda/bin/snak
 #TODO: need to test updated recipe with Docker and Singularity
 ```
 
+**Outside container, runc**
+
+This is a very easy switch to do! All that is needed is to define the entrypoint to the
+container via the configuration file to be the scif entrypoint, and we can even "hard code" the application
+to run as snakemake. This modified config file can be found in [configs/runc-config-noninteractive.json].
+
+```
+runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc
+[snakemake] executing /bin/bash /scif/apps/snakemake/scif/runscript all
+...
+Complete log: /scif/data/.snakemake/log/2018-02-25T180544.725734.snakemake.log
+```
+
+So it comes down to changing:
+
+```
+"args": [
+	"sh"
+],
+```
+
+to
+
+```
+"args": [
+	"scif", "run", "snakemake", "all"
+],
+```
+
+I can imagine that I would have some strategy to either manage a small 
+collection of config files to use per rootfs, **or** a method to produce
+the one I need on demand. I suspect this is what many popular container 
+technologies are already doing and I just haven't realized it :)
+
+
 **Outside container, shifter**
 
 Note that we are working in a container that has had the build step done (as shown above to pull)
@@ -241,6 +309,28 @@ docker run -v $PWD/data:/scif/data:z -v $PWD:/scif/data/graphviz_create_dag:z -i
 ch-run --cd $PWD -b data:/scif/data /var/tmp/snakemake.ch -- /opt/conda/bin/scif run graphviz_create_dag $PWD report.html dag.svg
 ```
 
+**runc**
+This is the same deal as before, we are just going to use a config to specify a different entry point and arguments to generate the dag. Since you've done this twice, I'll just show you the modified command:
+
+```
+"args": [
+	"scif", "run", "graphviz_create_dag", "/scif/data", "report.html","dag.svg"
+	],
+```
+
+and then run! Note that if you do this without changing permission, you would get an error:
+
+```
+process:10): Pango-WARNING **: error opening config file '/root/.config/pango/pangorc': Permission denied
+```
+
+and this would need to be resolved by specifying a different file, or changing the permission of the
+file from the initial build.
+
+```
+runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc[graphviz_create_dag] executing /bin/bash /scif/apps/graphviz_create_dag/scif/runscript /scif/data report.html dag.svg
+```
+
 ```
 > [graphviz_create_dag] executing /bin/bash /scif/apps/graphviz_create_dag/scif/runscript /home/fbartusch/github/snakemake_tutorial report.html dag.svg
 > Building DAG of jobs...
@@ -274,6 +364,14 @@ ch-run --cd $PWD -b data:/scif/data /var/tmp/snakemake.ch -- /opt/conda/bin/scif
 /opt/conda/bin/scif run bwa mem -o [e]SCIF_DATA/mapped_reads/A.sam [e]SCIF_DATA/genome.fa [e]SCIF_DATA/samples/A.fastq
 ```
 
+**Inside container, runc**
+Here we are shelling inside, so we are using the first config.json with args as a list with "sh".
+
+```
+runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc
+scif run bwa mem -o [e]SCIF_DATA/mapped_reads/A.sam [e]SCIF_DATA/genome.fa [e]SCIF_DATA/samples/A.fastq
+```
+
 
 <hr>
 
@@ -297,6 +395,22 @@ docker run -v $PWD/data:/scif/data:z vanessa/snakemake.scif run bwa mem -o [e]SC
 
 ```
 ch-run --cd $PWD -b data:/scif/data /var/tmp/snakemake.ch -- /opt/conda/bin/scif run bwa mem -o [e]SCIF_DATA/mapped_reads/A.sam [e]SCIF_DATA/genome.fa [e]SCIF_DATA/samples/A.fastq
+```
+
+**Outside container, runc**
+
+The modified "args" in the config.json is:
+
+```
+"args": [
+	"scif", "run", "bwa", "mem", "-o", "[e]SCIF_DATA/mapped_reads/A.sam", "[e]SCIF_DATA/genome.fa", "[e]SCIF_DATA/samples/A.fastq"
+	],
+```
+
+and then run! 
+
+```
+runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc
 ```
 
 ## Sam to Bam Conversion
@@ -328,6 +442,14 @@ ch-run --cd $PWD -b data:/scif/data /var/tmp/snakemake.ch -- /opt/conda/bin/scif
 /opt/conda/bin/scif run samtools view -Sb [e]SCIF_DATA/mapped_reads/A.sam [out] [e]SCIF_DATA/mapped_reads/A.bam
 ```
 
+**Inside container, runc**
+Here we are again shelling inside, so we are using the first config.json with args as a list with "sh".
+
+```
+runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc
+scif run samtools view -Sb [e]SCIF_DATA/mapped_reads/A.sam [out] [e]SCIF_DATA/mapped_reads/A.bam
+```
+
 <hr>
 
 **Outside the container, Singularity**
@@ -350,13 +472,33 @@ docker run -v $PWD/data:/scif/data vanessa/snakemake.scif run samtools 'view -Sb
 ch-run --cd $PWD -b data:/scif/data /var/tmp/snakemake.ch -- /opt/conda/bin/scif run samtools view -Sb [e]SCIF_DATA/mapped_reads/A.sam [out] [e]SCIF_DATA/mapped_reads/A.bam
 ```
 
-## Interactive development
-This can be done for Docker or Singularity, just with different commands to shell into the container!
+**Outside container, runc**
+Change the config.json args to:
 
+```
+"args": [
+	"scif", "run", "samtools", "view", "-Sb", "[e]SCIF_DATA/mapped_reads/A.sam", "[out]", "[e]SCIF_DATA/mapped_reads/A.bam"
+	],
+```
+
+and then run
+```
+runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc
+```
+
+## Interactive development
+This can be done for Docker, Singularity, Charliecloud, or runc, just with different commands to shell into the container. Note that for runc, the args in the config.json needs to be:
+
+```
+"args": [
+	"scif", "pyshell"
+	],
+```
 ```
 docker run -it -v $PWD/data:/scif/data:z vanessa/snakemake.scif pyshell
 singularity run --bind data/:/scif/data snakemake.simg pyshell
 ch-run /var/tmp/snakemake.ch -- /opt/conda/bin/scif pyshell
+runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc
 ```
 ```
 Found configurations for 4 scif apps

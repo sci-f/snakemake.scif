@@ -3,6 +3,8 @@ FROM continuumio/miniconda3
 # docker build -t vanessa/snakemake.scif .
 
 ADD snakemake_tutorial.scif /
+ADD Snakefile /
+ADD config.yaml /
 
 ENV PATH /opt/conda/bin:$PATH
 

@@ -1,8 +1,5 @@
 %appinstall bwa
-    # Dependencies of bwa
     apt-get -y install wget libbz2-dev zlib1g-dev
-
-    # bwa itself
     wget https://sourceforge.net/projects/bio-bwa/files/bwa-0.7.17.tar.bz2
     tar xvjf bwa-0.7.17.tar.bz2
     cp -r bwa-0.7.17/* lib 
@@ -14,7 +11,6 @@
 %apphelp bwa
     Burrows-Wheeler Aligner
 %apprun bwa
-    cd $SCIF_DATA
     exec bwa "$@"
 %applabels bwa
     VERSION 0.7.17
@@ -24,7 +20,6 @@
 %appinstall samtools
     apt-get -y install wget libbz2-dev zlib1g-dev xz-utils liblzma-dev
     apt-get -y install libncurses5-dev
-    # samtools
     wget https://github.com/samtools/samtools/releases/download/1.6/samtools-1.6.tar.bz2
     tar xvjf samtools-1.6.tar.bz2
     cd samtools-1.6
@@ -34,7 +29,6 @@
     cd ..
     rm -r samtools-1.6
     rm samtools-1.6.tar.bz2
-    # bcftools
     wget https://github.com/samtools/bcftools/releases/download/1.6/bcftools-1.6.tar.bz2
     tar xvjf bcftools-1.6.tar.bz2
     cd bcftools-1.6
@@ -47,7 +41,6 @@
 %apphelp samtools
     This app provides Samtools suite, consisting of Samtools and BCFtools 
 %apprun samtools
-    cd $SCIF_DATA
     exec samtools "$@"
 %applabels samtools
     VERSION 1.6
@@ -55,13 +48,24 @@
 %apptest samtools
     exec samtools
 
-%appinstall snakemake
+%appfiles snakemake
+    /Snakefile
 %apphelp snakemake
-    Run snakemake. The workflow is defined by a Snakefile that should be located in the $SCIF_APPDATA folder.
+    Run snakemake. The workflow is defined by a Snakefile that should be located in the $SCIF_DATA folder.
     This app does not provide snakemake itself, because it is already installed in the Singularity/Docker container.
-    But it would be easy to install snakemake also in the app context.
+    But it would be easy to install snakemake also in the app context. The Snakefile should be present in the folder.
+    If not, we copy the one provided by the snakemake application.
 %apprun snakemake
-    exec /opt/conda/bin/snakemake "$@"
+    if [ ! -e "${SCIF_DATA}/Snakefile" ]; then
+        echo "Copying Snakefile to $SCIF_DATA"
+        cp ${SCIF_APPDATA}/Snakefile ${SCIF_DATA}/Snakefile
+    fi
+    if [ ! -e "${SCIF_DATA}/config.yaml" ]; then
+        echo "Copying config.yaml to $SCIF_DATA"
+        cp ${SCIF_APPDATA}/config.yaml ${SCIF_DATA}/config.yaml
+    fi
+    cd ${SCIF_DATA}
+    /opt/conda/bin/snakemake "$@"
 
 %appinstall graphviz_create_dag
     apt-get -y install graphviz

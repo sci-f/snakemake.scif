@@ -11,12 +11,12 @@
 <polygon fill="white" stroke="none" points="-4,4 -4,-472 299.5,-472 299.5,4 -4,4"/>
 <!-- 0 -->
 <g id="node1" class="node"><title>0</title>
-<path fill="none" stroke="#d6d856" stroke-width="2" stroke-dasharray="5,2" d="M153.5,-36C153.5,-36 123.5,-36 123.5,-36 117.5,-36 111.5,-30 111.5,-24 111.5,-24 111.5,-12 111.5,-12 111.5,-6 117.5,-0 123.5,-0 123.5,-0 153.5,-0 153.5,-0 159.5,-0 165.5,-6 165.5,-12 165.5,-12 165.5,-24 165.5,-24 165.5,-30 159.5,-36 153.5,-36"/>
+<path fill="none" stroke="#569ad8" stroke-width="2" stroke-dasharray="5,2" d="M153.5,-36C153.5,-36 123.5,-36 123.5,-36 117.5,-36 111.5,-30 111.5,-24 111.5,-24 111.5,-12 111.5,-12 111.5,-6 117.5,-0 123.5,-0 123.5,-0 153.5,-0 153.5,-0 159.5,-0 165.5,-6 165.5,-12 165.5,-12 165.5,-24 165.5,-24 165.5,-30 159.5,-36 153.5,-36"/>
 <text text-anchor="middle" x="138.5" y="-15.5" font-family="sans" font-size="10.00">report</text>
 </g>
 <!-- 1 -->
 <g id="node2" class="node"><title>1</title>
-<path fill="none" stroke="#d85656" stroke-width="2" stroke-dasharray="5,2" d="M164,-108C164,-108 113,-108 113,-108 107,-108 101,-102 101,-96 101,-96 101,-84 101,-84 101,-78 107,-72 113,-72 113,-72 164,-72 164,-72 170,-72 176,-78 176,-84 176,-84 176,-96 176,-96 176,-102 170,-108 164,-108"/>
+<path fill="none" stroke="#d6d856" stroke-width="2" stroke-dasharray="5,2" d="M164,-108C164,-108 113,-108 113,-108 107,-108 101,-102 101,-96 101,-96 101,-84 101,-84 101,-78 107,-72 113,-72 113,-72 164,-72 164,-72 170,-72 176,-78 176,-84 176,-84 176,-96 176,-96 176,-102 170,-108 164,-108"/>
 <text text-anchor="middle" x="138.5" y="-87.5" font-family="sans" font-size="10.00">bcftools_call</text>
 </g>
 <!-- 1&#45;&gt;0 -->
@@ -26,79 +26,79 @@
 </g>
 <!-- 2 -->
 <g id="node3" class="node"><title>2</title>
-<path fill="none" stroke="#56d8d8" stroke-width="2" stroke-dasharray="5,2" d="M95,-252C95,-252 34,-252 34,-252 28,-252 22,-246 22,-240 22,-240 22,-228 22,-228 22,-222 28,-216 34,-216 34,-216 95,-216 95,-216 101,-216 107,-222 107,-228 107,-228 107,-240 107,-240 107,-246 101,-252 95,-252"/>
-<text text-anchor="middle" x="64.5" y="-231.5" font-family="sans" font-size="10.00">samtools_sort</text>
+<path fill="none" stroke="#56d89a" stroke-width="2" stroke-dasharray="5,2" d="M283.5,-180C283.5,-180 215.5,-180 215.5,-180 209.5,-180 203.5,-174 203.5,-168 203.5,-168 203.5,-156 203.5,-156 203.5,-150 209.5,-144 215.5,-144 215.5,-144 283.5,-144 283.5,-144 289.5,-144 295.5,-150 295.5,-156 295.5,-156 295.5,-168 295.5,-168 295.5,-174 289.5,-180 283.5,-180"/>
+<text text-anchor="middle" x="249.5" y="-159.5" font-family="sans" font-size="10.00">samtools_index</text>
 </g>
 <!-- 2&#45;&gt;1 -->
 <g id="edge2" class="edge"><title>2&#45;&gt;1</title>
+<path fill="none" stroke="grey" stroke-width="2" d="M222.346,-143.876C207.967,-134.808 190.119,-123.552 174.59,-113.759"/>
+<polygon fill="grey" stroke="grey" stroke-width="2" points="176.084,-110.564 165.758,-108.19 172.35,-116.484 176.084,-110.564"/>
+</g>
+<!-- 3 -->
+<g id="node4" class="node"><title>3</title>
+<path fill="none" stroke="#56d8d8" stroke-width="2" stroke-dasharray="5,2" d="M95,-252C95,-252 34,-252 34,-252 28,-252 22,-246 22,-240 22,-240 22,-228 22,-228 22,-222 28,-216 34,-216 34,-216 95,-216 95,-216 101,-216 107,-222 107,-228 107,-228 107,-240 107,-240 107,-246 101,-252 95,-252"/>
+<text text-anchor="middle" x="64.5" y="-231.5" font-family="sans" font-size="10.00">samtools_sort</text>
+</g>
+<!-- 3&#45;&gt;1 -->
+<g id="edge3" class="edge"><title>3&#45;&gt;1</title>
 <path fill="none" stroke="grey" stroke-width="2" d="M54.3596,-215.794C44.7239,-196.983 33.4838,-166.52 46.5,-144 56.3842,-126.899 74.1129,-114.828 91.3873,-106.573"/>
 <polygon fill="grey" stroke="grey" stroke-width="2" points="93.1556,-109.618 100.885,-102.371 90.3236,-103.216 93.1556,-109.618"/>
 </g>
 <!-- 4 -->
 <g id="node5" class="node"><title>4</title>
-<path fill="none" stroke="#97d856" stroke-width="2" stroke-dasharray="5,2" d="M135.5,-180C135.5,-180 67.5,-180 67.5,-180 61.5,-180 55.5,-174 55.5,-168 55.5,-168 55.5,-156 55.5,-156 55.5,-150 61.5,-144 67.5,-144 67.5,-144 135.5,-144 135.5,-144 141.5,-144 147.5,-150 147.5,-156 147.5,-156 147.5,-168 147.5,-168 147.5,-174 141.5,-180 135.5,-180"/>
+<path fill="none" stroke="#56d89a" stroke-width="2" stroke-dasharray="5,2" d="M135.5,-180C135.5,-180 67.5,-180 67.5,-180 61.5,-180 55.5,-174 55.5,-168 55.5,-168 55.5,-156 55.5,-156 55.5,-150 61.5,-144 67.5,-144 67.5,-144 135.5,-144 135.5,-144 141.5,-144 147.5,-150 147.5,-156 147.5,-156 147.5,-168 147.5,-168 147.5,-174 141.5,-180 135.5,-180"/>
 <text text-anchor="middle" x="101.5" y="-159.5" font-family="sans" font-size="10.00">samtools_index</text>
 </g>
-<!-- 2&#45;&gt;4 -->
-<g id="edge8" class="edge"><title>2&#45;&gt;4</title>
+<!-- 3&#45;&gt;4 -->
+<g id="edge8" class="edge"><title>3&#45;&gt;4</title>
 <path fill="none" stroke="grey" stroke-width="2" d="M73.6461,-215.697C77.9026,-207.644 83.0558,-197.894 87.7664,-188.982"/>
 <polygon fill="grey" stroke="grey" stroke-width="2" points="90.8803,-190.581 92.4591,-180.104 84.6917,-187.31 90.8803,-190.581"/>
-</g>
-<!-- 3 -->
-<g id="node4" class="node"><title>3</title>
-<path fill="none" stroke="#56d8d8" stroke-width="2" stroke-dasharray="5,2" d="M242,-252C242,-252 181,-252 181,-252 175,-252 169,-246 169,-240 169,-240 169,-228 169,-228 169,-222 175,-216 181,-216 181,-216 242,-216 242,-216 248,-216 254,-222 254,-228 254,-228 254,-240 254,-240 254,-246 248,-252 242,-252"/>
-<text text-anchor="middle" x="211.5" y="-231.5" font-family="sans" font-size="10.00">samtools_sort</text>
-</g>
-<!-- 3&#45;&gt;1 -->
-<g id="edge3" class="edge"><title>3&#45;&gt;1</title>
-<path fill="none" stroke="grey" stroke-width="2" d="M202.694,-215.871C190.089,-191.35 166.791,-146.032 151.999,-117.259"/>
-<polygon fill="grey" stroke="grey" stroke-width="2" points="155.022,-115.483 147.337,-108.189 148.796,-118.683 155.022,-115.483"/>
-</g>
-<!-- 5 -->
-<g id="node6" class="node"><title>5</title>
-<path fill="none" stroke="#97d856" stroke-width="2" stroke-dasharray="5,2" d="M283.5,-180C283.5,-180 215.5,-180 215.5,-180 209.5,-180 203.5,-174 203.5,-168 203.5,-168 203.5,-156 203.5,-156 203.5,-150 209.5,-144 215.5,-144 215.5,-144 283.5,-144 283.5,-144 289.5,-144 295.5,-150 295.5,-156 295.5,-156 295.5,-168 295.5,-168 295.5,-174 289.5,-180 283.5,-180"/>
-<text text-anchor="middle" x="249.5" y="-159.5" font-family="sans" font-size="10.00">samtools_index</text>
-</g>
-<!-- 3&#45;&gt;5 -->
-<g id="edge9" class="edge"><title>3&#45;&gt;5</title>
-<path fill="none" stroke="grey" stroke-width="2" d="M220.893,-215.697C225.265,-207.644 230.557,-197.894 235.395,-188.982"/>
-<polygon fill="grey" stroke="grey" stroke-width="2" points="238.52,-190.563 240.215,-180.104 232.368,-187.223 238.52,-190.563"/>
 </g>
 <!-- 4&#45;&gt;1 -->
 <g id="edge4" class="edge"><title>4&#45;&gt;1</title>
 <path fill="none" stroke="grey" stroke-width="2" d="M110.646,-143.697C114.903,-135.644 120.056,-125.894 124.766,-116.982"/>
 <polygon fill="grey" stroke="grey" stroke-width="2" points="127.88,-118.581 129.459,-108.104 121.692,-115.31 127.88,-118.581"/>
 </g>
+<!-- 5 -->
+<g id="node6" class="node"><title>5</title>
+<path fill="none" stroke="#56d8d8" stroke-width="2" stroke-dasharray="5,2" d="M242,-252C242,-252 181,-252 181,-252 175,-252 169,-246 169,-240 169,-240 169,-228 169,-228 169,-222 175,-216 181,-216 181,-216 242,-216 242,-216 248,-216 254,-222 254,-228 254,-228 254,-240 254,-240 254,-246 248,-252 242,-252"/>
+<text text-anchor="middle" x="211.5" y="-231.5" font-family="sans" font-size="10.00">samtools_sort</text>
+</g>
 <!-- 5&#45;&gt;1 -->
 <g id="edge5" class="edge"><title>5&#45;&gt;1</title>
-<path fill="none" stroke="grey" stroke-width="2" d="M222.346,-143.876C207.967,-134.808 190.119,-123.552 174.59,-113.759"/>
-<polygon fill="grey" stroke="grey" stroke-width="2" points="176.084,-110.564 165.758,-108.19 172.35,-116.484 176.084,-110.564"/>
+<path fill="none" stroke="grey" stroke-width="2" d="M202.694,-215.871C190.089,-191.35 166.791,-146.032 151.999,-117.259"/>
+<polygon fill="grey" stroke="grey" stroke-width="2" points="155.022,-115.483 147.337,-108.189 148.796,-118.683 155.022,-115.483"/>
+</g>
+<!-- 5&#45;&gt;2 -->
+<g id="edge6" class="edge"><title>5&#45;&gt;2</title>
+<path fill="none" stroke="grey" stroke-width="2" d="M220.893,-215.697C225.265,-207.644 230.557,-197.894 235.395,-188.982"/>
+<polygon fill="grey" stroke="grey" stroke-width="2" points="238.52,-190.563 240.215,-180.104 232.368,-187.223 238.52,-190.563"/>
 </g>
 <!-- 6 -->
 <g id="node7" class="node"><title>6</title>
-<path fill="none" stroke="#59d856" stroke-width="2" stroke-dasharray="5,2" d="M117,-324C117,-324 12,-324 12,-324 6,-324 0,-318 0,-312 0,-312 0,-300 0,-300 0,-294 6,-288 12,-288 12,-288 117,-288 117,-288 123,-288 129,-294 129,-300 129,-300 129,-312 129,-312 129,-318 123,-324 117,-324"/>
+<path fill="none" stroke="#d89556" stroke-width="2" stroke-dasharray="5,2" d="M117,-324C117,-324 12,-324 12,-324 6,-324 0,-318 0,-312 0,-312 0,-300 0,-300 0,-294 6,-288 12,-288 12,-288 117,-288 117,-288 123,-288 129,-294 129,-300 129,-300 129,-312 129,-312 129,-318 123,-324 117,-324"/>
 <text text-anchor="middle" x="64.5" y="-303.5" font-family="sans" font-size="10.00">samtools_sam_to_bam</text>
 </g>
-<!-- 6&#45;&gt;2 -->
-<g id="edge6" class="edge"><title>6&#45;&gt;2</title>
+<!-- 6&#45;&gt;3 -->
+<g id="edge7" class="edge"><title>6&#45;&gt;3</title>
 <path fill="none" stroke="grey" stroke-width="2" d="M64.5,-287.697C64.5,-279.983 64.5,-270.712 64.5,-262.112"/>
 <polygon fill="grey" stroke="grey" stroke-width="2" points="68.0001,-262.104 64.5,-252.104 61.0001,-262.104 68.0001,-262.104"/>
 </g>
 <!-- 7 -->
 <g id="node8" class="node"><title>7</title>
-<path fill="none" stroke="#59d856" stroke-width="2" stroke-dasharray="5,2" d="M264,-324C264,-324 159,-324 159,-324 153,-324 147,-318 147,-312 147,-312 147,-300 147,-300 147,-294 153,-288 159,-288 159,-288 264,-288 264,-288 270,-288 276,-294 276,-300 276,-300 276,-312 276,-312 276,-318 270,-324 264,-324"/>
+<path fill="none" stroke="#d89556" stroke-width="2" stroke-dasharray="5,2" d="M264,-324C264,-324 159,-324 159,-324 153,-324 147,-318 147,-312 147,-312 147,-300 147,-300 147,-294 153,-288 159,-288 159,-288 264,-288 264,-288 270,-288 276,-294 276,-300 276,-300 276,-312 276,-312 276,-318 270,-324 264,-324"/>
 <text text-anchor="middle" x="211.5" y="-303.5" font-family="sans" font-size="10.00">samtools_sam_to_bam</text>
 </g>
-<!-- 7&#45;&gt;3 -->
-<g id="edge7" class="edge"><title>7&#45;&gt;3</title>
+<!-- 7&#45;&gt;5 -->
+<g id="edge9" class="edge"><title>7&#45;&gt;5</title>
 <path fill="none" stroke="grey" stroke-width="2" d="M211.5,-287.697C211.5,-279.983 211.5,-270.712 211.5,-262.112"/>
 <polygon fill="grey" stroke="grey" stroke-width="2" points="215,-262.104 211.5,-252.104 208,-262.104 215,-262.104"/>
 </g>
 <!-- 8 -->
 <g id="node9" class="node"><title>8</title>
-<path fill="none" stroke="#d89556" stroke-width="2" stroke-dasharray="5,2" d="M117,-396C117,-396 76,-396 76,-396 70,-396 64,-390 64,-384 64,-384 64,-372 64,-372 64,-366 70,-360 76,-360 76,-360 117,-360 117,-360 123,-360 129,-366 129,-372 129,-372 129,-384 129,-384 129,-390 123,-396 117,-396"/>
+<path fill="none" stroke="#d85656" stroke-width="2" stroke-dasharray="5,2" d="M117,-396C117,-396 76,-396 76,-396 70,-396 64,-390 64,-384 64,-384 64,-372 64,-372 64,-366 70,-360 76,-360 76,-360 117,-360 117,-360 123,-360 129,-366 129,-372 129,-372 129,-384 129,-384 129,-390 123,-396 117,-396"/>
 <text text-anchor="middle" x="96.5" y="-381" font-family="sans" font-size="10.00">bwa_map</text>
-<text text-anchor="middle" x="96.5" y="-370" font-family="sans" font-size="10.00">sample: A</text>
+<text text-anchor="middle" x="96.5" y="-370" font-family="sans" font-size="10.00">sample: B</text>
 </g>
 <!-- 8&#45;&gt;6 -->
 <g id="edge10" class="edge"><title>8&#45;&gt;6</title>
@@ -107,9 +107,9 @@
 </g>
 <!-- 9 -->
 <g id="node10" class="node"><title>9</title>
-<path fill="none" stroke="#d89556" stroke-width="2" stroke-dasharray="5,2" d="M216,-396C216,-396 175,-396 175,-396 169,-396 163,-390 163,-384 163,-384 163,-372 163,-372 163,-366 169,-360 175,-360 175,-360 216,-360 216,-360 222,-360 228,-366 228,-372 228,-372 228,-384 228,-384 228,-390 222,-396 216,-396"/>
+<path fill="none" stroke="#d85656" stroke-width="2" stroke-dasharray="5,2" d="M216,-396C216,-396 175,-396 175,-396 169,-396 163,-390 163,-384 163,-384 163,-372 163,-372 163,-366 169,-360 175,-360 175,-360 216,-360 216,-360 222,-360 228,-366 228,-372 228,-372 228,-384 228,-384 228,-390 222,-396 216,-396"/>
 <text text-anchor="middle" x="195.5" y="-381" font-family="sans" font-size="10.00">bwa_map</text>
-<text text-anchor="middle" x="195.5" y="-370" font-family="sans" font-size="10.00">sample: B</text>
+<text text-anchor="middle" x="195.5" y="-370" font-family="sans" font-size="10.00">sample: A</text>
 </g>
 <!-- 9&#45;&gt;7 -->
 <g id="edge11" class="edge"><title>9&#45;&gt;7</title>
@@ -118,7 +118,7 @@
 </g>
 <!-- 10 -->
 <g id="node11" class="node"><title>10</title>
-<path fill="none" stroke="#569ad8" stroke-width="2" stroke-dasharray="5,2" d="M171,-468C171,-468 120,-468 120,-468 114,-468 108,-462 108,-456 108,-456 108,-444 108,-444 108,-438 114,-432 120,-432 120,-432 171,-432 171,-432 177,-432 183,-438 183,-444 183,-444 183,-456 183,-456 183,-462 177,-468 171,-468"/>
+<path fill="none" stroke="#97d856" stroke-width="2" stroke-dasharray="5,2" d="M171,-468C171,-468 120,-468 120,-468 114,-468 108,-462 108,-456 108,-456 108,-444 108,-444 108,-438 114,-432 120,-432 120,-432 171,-432 171,-432 177,-432 183,-438 183,-444 183,-444 183,-456 183,-456 183,-462 177,-468 171,-468"/>
 <text text-anchor="middle" x="145.5" y="-453" font-family="sans" font-size="10.00">bwa_index</text>
 <text text-anchor="middle" x="145.5" y="-442" font-family="sans" font-size="10.00">ref: genome</text>
 </g>
