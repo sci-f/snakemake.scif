@@ -142,6 +142,7 @@ In all cases we bind the example dataset to the data directory provided by SCIF.
 
 ```
 singularity shell --bind data/:/scif/data snakemake.simg
+$ scif run snakemake all
 ```
 
 
@@ -151,7 +152,7 @@ To run the whole workflow we need the Snakefile which is not part of the contain
 
 ```
 docker run -v $PWD/data:/scif/data:z -v $PWD:/working_dir -it -w /working_dir --entrypoint /bin/bash vanessa/snakemake.scif
-snakemake all
+$ scif run snakemake all
 ```
 
 **Inside container, Charliecloud**
@@ -159,7 +160,7 @@ snakemake all
 ```
 ch-run --cd $PWD -b data:/scif/data /var/tmp/snakemake.ch -- /bin/bash
 export PATH=/opt/conda/bin:$PATH
-snakemake all
+$ scif run snakemake all
 ```
 
 **Inside container, runc**
@@ -212,7 +213,7 @@ shifter --image=vanessa/snakemake.scif:container-friends --volume /scratch:/scif
 **Outside Container, Singularity**
 
 ```
-singularity exec --bind data/:/scif/data snakemake.simg snakemake all
+singularity run --bind data/:/scif/data snakemake.simg run snakemake all
 ```
 
 **Outside Container, Docker**
@@ -226,8 +227,7 @@ docker run -v $PWD/data:/scif/data:z -v $PWD:/scif/data/snakemake:z -it vanessa/
 **Outside Container, Charliecloud**
 
 ```
-ch-run --cd $PWD -b data:/scif/data /var/tmp/snakemake.ch -- /opt/conda/bin/snakemake all
-#TODO: need to test updated recipe with Docker and Singularity
+ch-run --cd $PWD -b data:/scif/data /var/tmp/snakemake.ch -- /opt/conda/bin/scif run snakemake all
 ```
 
 **Outside container, runc**
