@@ -78,59 +78,67 @@ and add the `/opt/conda/bin` to the `$PATH` to find the scif executable.
 **shifter**
 
 The user should know this is the "shifter in a box" which is likely much harder to use than a cluster
-installation. I don't have shifter at my insitution so this was the approach I chose to test.
+installation. I don't have shifter at my insitution so this was the approach I chose to test. Also
+note that for this example we assume the Docker box to be our host, and so we clone the repository into it
+(as opposed to a double bind from host --> Shifter box --> shifter container).
 
 ```
-docker run -it --rm --privileged -v $PWD/data:/scratch -v $PWD:/code scanon/shifterbox:2
+docker run -it --rm --privileged scanon/shifterbox:2
+
+# We need git to clone the repo!
+yum install -y git
 ```
 
-This is a bit confusing, but we will need to again bind the folders with the snakefile ($PWD on the host)
-somewhere inside the container, and the /scratch data directory to /scif/data.
-
-```
-chmod 1777 /scratch
-chmod 1777 /code
-```
-
-Next, edit the config to change
-
-```
-siteFs=/home:/home
-# to
-siteFs=/home:/home;/scratch:/scif/data;/code:/code
-```
-
-The above is a bit weird - it says that we need to bind the data folder to /scif/data
-in the container (we can't bind /scif because we lose our apps) and we want to bind
-/code to /code, as this is the folder bound from the host with the Snakefile 
-for the workflow.
-
-You will need an editor and then to open the right file!
-
-```
-yum install -y vim
-vim /etc/shifter/udiRoot.conf
-```
-and then start! Unfortunately this only works for me about half the time, and usually on the second go. But you can try again.
+We can then start the gateway and database (I believe it is MongoDB). 
+This works for me about half the time, and usually on the second go. But you can try again.
 
 ```
 /src/start.sh
 su - auser
+```
+
+Now we can pull the container that has our analysis stuffs in it:
+
+```
 shifterimg pull vanessa/snakemake.scif:container-friends
 ```
-If you get an error about contacting the gateway, it's a race condition likely, and you should remove the lock for MongoDB and try again:
+
+If you get an error about contacting the gateway, it's a race condition likely, 
+and you should exit the user, as the superuser remove the lock for MongoDB,
+and try again:
 
 ```
+$ exit
 $ rm -rf /data/db/
 $ /src/start.sh
+
+su - auser
+shifterimg pull vanessa/snakemake.scif:container-friends
 ```
 
-If you intend to run / test the shifter box, leave it open! You need the pulled container.
+After you use `shifterimg pull` and have the image, also as the user, 
+let's get our data (it's the same repository, but we want it inside the shifter
+box to mimic binding it to the container).
 
-The interesting thing about the above is that we are building many of the containers by way of starting with Docker layers. This reinforces the idea that the underlying guts of a container are the file contents. Docker delivers the contents nicely in layers, so it's a starting point to dump them into another base, and then interact. Do all roads lead to Docker layers? I'll let you decided.
+```
+su - auser
+git clone -b container-friends https://github.com/sci-f/snakemake.scif
+cd snakemake.scif/
+```
+
+If you intend to run / test the shifter box, leave it open! We will continue
+these steps in the sections below with the pulled container. 
+
+The interesting thing about the above is that we are building many of the 
+containers by way of starting with Docker layers. This reinforces the idea 
+that the underlying guts of a container are the file contents. Docker delivers 
+the contents nicely in layers, so it's a starting point to dump them into 
+another base, and then interact. Do all roads lead to, or start from 
+Docker layers? Is the power in the allmighty tarball? I'll let you decided.
 
 ## Running Containers
-For each of the examples below, we will show examples running commands **inside** and **outside** of the containers.
+For each of the examples below, we will show examples running commands 
+**inside** and **outside** of the containers.
 
 ### Run the workflow 
 
@@ -181,7 +189,14 @@ Complete log: /scif/data/.snakemake/log/2018-02-25T180544.725734.snakemake.log
 
 **Inside container, shifter**
 
-Note that we are working in a container that has had the build step done (as shown above to pull)
+Note that we are working in a container that has had the build step done 
+(as shown above to pull) and we have cloned our snakemake repo.
+
+```
+$ echo $PWD
+/home/auser/snakemake.scif
+shifter --image=vanessa/snakemake.scif:container-friends --volume `pwd`/data:/scif/data bash
+
 
 ```
 $ shifterimg images

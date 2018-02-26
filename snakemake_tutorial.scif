@@ -50,6 +50,7 @@
 
 %appfiles snakemake
     /Snakefile
+    /config.yaml
 %apphelp snakemake
     Run snakemake. The workflow is defined by a Snakefile that should be located in the $SCIF_DATA folder.
     This app does not provide snakemake itself, because it is already installed in the Singularity/Docker container.
@@ -58,11 +59,11 @@
 %apprun snakemake
     if [ ! -e "${SCIF_DATA}/Snakefile" ]; then
         echo "Copying Snakefile to $SCIF_DATA"
-        cp ${SCIF_APPDATA}/Snakefile ${SCIF_DATA}/Snakefile
+        cp ${SCIF_APPROOT}/Snakefile ${SCIF_DATA}/Snakefile
     fi
     if [ ! -e "${SCIF_DATA}/config.yaml" ]; then
         echo "Copying config.yaml to $SCIF_DATA"
-        cp ${SCIF_APPDATA}/config.yaml ${SCIF_DATA}/config.yaml
+        cp ${SCIF_APPROOT}/config.yaml ${SCIF_DATA}/config.yaml
     fi
     cd ${SCIF_DATA}
     /opt/conda/bin/snakemake "$@"
