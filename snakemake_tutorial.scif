@@ -11,6 +11,7 @@
 %apphelp bwa
     Burrows-Wheeler Aligner
 %apprun bwa
+    cd $SCIF_DATA
     exec bwa "$@"
 %applabels bwa
     VERSION 0.7.17
@@ -41,6 +42,7 @@
 %apphelp samtools
     This app provides Samtools suite, consisting of Samtools and BCFtools 
 %apprun samtools
+    cd $SCIF_DATA
     exec samtools "$@"
 %applabels samtools
     VERSION 1.6

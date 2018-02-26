@@ -196,31 +196,8 @@ Note that we are working in a container that has had the build step done
 $ echo $PWD
 /home/auser/snakemake.scif
 shifter --image=vanessa/snakemake.scif:container-friends --volume `pwd`/data:/scif/data bash
-
-
-```
-$ shifterimg images
-mycluster  docker     READY    e4e467178d   2018-02-23T21:29:58 vanessa/snakemake.scif:container-friends
-
-# I would want to do this, because I have /scratch in the container. 
-# The subfolder "data" of scratch should be mounted to /scif/data, and /scratch should be bound anywhere really.
-# The base folder /scif cannot be bound as
-$ shifter --image=vanessa/snakemake.scif:container-friends --volume /scratch:/scif/data /bin/bash
-$ cd /
-```
-
-This doesn't work
-```
-shifter --image=vanessa/snakemake.scif:container-friends  /bin/bash
-FAILED to create volume "to": /var/udiMount//scif/data, cannot create mount points in that location
-FAILED to mount siteFs volumes
-FAILED to properly setup site modifications
-FAILED to mount image into UDI
-FAILED to setup image.
-```
-```
-# but I figured out pwd command...
-shifter --image=vanessa/snakemake.scif:container-friends --volume /scratch:/scif/data --workdir /scratch /bin/bash
+$ scif run snakemake all
+# THIS ISN'T WORKING
 ```
 
 <hr>
