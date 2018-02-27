@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var github = "https://github.com/researchapps/living-docs"
+    var github = "https://github.com/sci-f/snakemake.scif"
     var divs = $("#h1,h2,h3,h4"); 
     $.each(divs, function(i,e){
 
@@ -14,12 +14,12 @@ $(document).ready(function() {
         start += button;
 
         // Edit
-        var link = github + "/edit/master/docs/no-jekyll/#" + did;
+        var link = github + "/edit/master/#" + did;
         var button = "<p><a href='" + link + "' target='_blank'>Edit this page</a></p>";
         start += button;
 
         // Issues;
-        var link = github + "/issues/new?labels=question&title=Question:&body=Question on: " + github + "/tree/master/docs/no-jekyll/README.md%23" + did;
+        var link = github + "/issues/new?labels=question&title=Question:&body=Question on: " + github + "/tree/master/README.md%23" + did;
 
         var button = "<p><a href='" + link + "' target='_blank'>Ask a Question</a></p>";
         start += button;
