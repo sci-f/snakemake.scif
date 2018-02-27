@@ -5,13 +5,15 @@ From: continuumio/miniconda3
 
 %files
     snakemake_tutorial.scif
+    Snakefile
+    config.yaml
 
 %environment
     PATH=/opt/conda/bin:$PATH
     export PATH
 
 %post
-    apt-get -y install build-essential
+    apt-get update && apt-get -y install build-essential
 
     # Install scif and scif-apps
     /opt/conda/bin/pip install scif 

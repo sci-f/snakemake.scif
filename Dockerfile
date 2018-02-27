@@ -3,10 +3,12 @@ FROM continuumio/miniconda3
 # docker build -t vanessa/snakemake.scif .
 
 ADD snakemake_tutorial.scif /
+ADD Snakefile /
+ADD config.yaml /
 
 ENV PATH /opt/conda/bin:$PATH
 
-RUN apt-get -y install build-essential git
+RUN apt-get update && apt-get -y install build-essential git
 
 # Install scif, snakemake
 
