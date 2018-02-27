@@ -10,14 +10,11 @@ This repository implements the SnakeMake tutorial workflow and uses the Scientif
  - [Singularity](http://singularity.lbl.gov/install-linux)
  - [Charliecloud](https://hpc.github.io/charliecloud/install.html#manual-build-and-install)
  - [runc](https://github.com/opencontainers/runc)
+ - [Shifter](https://github.com/NERSC/Shifter-Tutorial/tree/master/examples/shifter-in-a-box)
 
-The following container technologies don't have user friendly build clients available (but are used by admins successfully in their respective locations!).
+The following container technologies don't have user friendly build clients available (but are used by admins successfully in their respective locations).
 
  - [Inception](https://github.com/NCAR/Inception): I couldn't figure out how to use it, my [issue is posted here](https://github.com/NCAR/Inception/issues/9).
-
-and the following containers had various bugs, or I just couldn't figure it out from the documentation available.
-
- - [shifter](https://github.com/NERSC/Shifter-Tutorial/tree/master/examples/shifter-in-a-box)
 
 We will take the following format in each section, to show the same command for each
 container technology, followed by the output that each results in.
@@ -75,7 +72,7 @@ and add the `/opt/conda/bin` to the `$PATH` to find the scif executable.
 ```
 
 
-**shifter**
+**Shifter**
 
 The user should know this is the "shifter in a box" which is likely much harder to use than a cluster
 installation. I don't have shifter at my insitution so this was the approach I chose to test. Also
