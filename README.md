@@ -187,7 +187,7 @@ runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc
 Complete log: /scif/data/.snakemake/log/2018-02-25T180544.725734.snakemake.log
 ```
 
-**Inside container, shifter**
+**Inside container, Shifter**
 
 Note that we are working in a container that has had the build step done 
 (as shown above to pull) and we have cloned our snakemake repo.
@@ -197,7 +197,6 @@ $ echo $PWD
 /home/auser/snakemake.scif
 shifter --image=vanessa/snakemake.scif:container-friends --volume `pwd`/data:/scif/data bash
 $ scif run snakemake all
-# THIS ISN'T WORKING
 ```
 
 <hr>
@@ -257,15 +256,12 @@ the one I need on demand. I suspect this is what many popular container
 technologies are already doing and I just haven't realized it :)
 
 
-**Outside container, shifter**
+**Outside container, Shifter**
 
-Note that we are working in a container that has had the build step done (as shown above to pull)
+Note that we are working in a container that has had the build step done (as shown above to pull and clone the repository)
 
 ```
-$ shifterimg images
-mycluster  docker     READY    e4e467178d   2018-02-23T21:29:58 vanessa/snakemake.scif:container-friends
-$ shifter --image=vanessa/snakemake.scif:container-friends --volume /scratch:/scif/data /opt/conda/bin/snakemake all
-# STOPPED here - need $PWD or equivalent command.
+$ shifter --image=vanessa/snakemake.scif:container-friends --volume `pwd`/data:/scif/data --workdir /scif/data /opt/conda/bin/scif run snakemake all
 ```
 
 ## Generate graphical representation of the workflow
@@ -323,6 +319,12 @@ file from the initial build.
 runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc[graphviz_create_dag] executing /bin/bash /scif/apps/graphviz_create_dag/scif/runscript /scif/data report.html dag.svg
 ```
 
+**Shifter**
+
+```
+shifter --image=vanessa/snakemake.scif:container-friends --volume `pwd`/data:/scif/data --workdir /scif/data /opt/conda/bin/scif run graphviz_create_dag `pwd` report.html dag.svg
+```
+
 ```
 > [graphviz_create_dag] executing /bin/bash /scif/apps/graphviz_create_dag/scif/runscript /home/fbartusch/github/snakemake_tutorial report.html dag.svg
 > Building DAG of jobs...
@@ -364,12 +366,19 @@ runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc
 scif run bwa mem -o [e]SCIF_DATA/mapped_reads/A.sam [e]SCIF_DATA/genome.fa [e]SCIF_DATA/samples/A.fastq
 ```
 
+**Inside container, Shifter**
+
+We are still working in a container that has had the build step done:
+
+```
+$ echo $PWD
+/home/auser/snakemake.scif
+shifter --image=vanessa/snakemake.scif:container-friends --volume `pwd`/data:/scif/data bash
+$ scif run bwa mem -o [e]SCIF_DATA/mapped_reads/A.sam [e]SCIF_DATA/genome.fa [e]SCIF_DATA/samples/A.fastq
+```
 
 <hr>
 
-```
-mkdir -p data/mapped_reads
-```
 
 **Outside container, Singularity**
 
@@ -403,6 +412,12 @@ and then run!
 
 ```
 runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc
+```
+
+**Outside container, Shifter**
+
+```
+$ shifter --image=vanessa/snakemake.scif:container-friends --volume `pwd`/data:/scif/data --workdir /scif/data /opt/conda/bin/scif run bwa mem -o [e]SCIF_DATA/mapped_reads/A.sam [e]SCIF_DATA/genome.fa [e]SCIF_DATA/samples/A.fastq
 ```
 
 ## Sam to Bam Conversion
@@ -442,6 +457,17 @@ runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc
 scif run samtools view -Sb [e]SCIF_DATA/mapped_reads/A.sam [out] [e]SCIF_DATA/mapped_reads/A.bam
 ```
 
+**Inside container, Shifter**
+
+We are still working in a container that has had the build step done:
+
+```
+$ echo $PWD
+/home/auser/snakemake.scif
+shifter --image=vanessa/snakemake.scif:container-friends --volume `pwd`/data:/scif/data bash
+$ scif run samtools view -Sb [e]SCIF_DATA/mapped_reads/A.sam [out] [e]SCIF_DATA/mapped_reads/A.bam
+```
+
 <hr>
 
 **Outside the container, Singularity**
@@ -478,6 +504,15 @@ and then run
 runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc
 ```
 
+**Outside container, Shifter**
+
+We are still working in a container that has had the build step done:
+
+```
+$ shifter --image=vanessa/snakemake.scif:container-friends --volume `pwd`/data:/scif/data --workdir /scif/data /opt/conda/bin/scif run samtools view -Sb [e]SCIF_DATA/mapped_reads/A.sam [out] [e]SCIF_DATA/mapped_reads/A.bam
+```
+
+
 ## Interactive development
 This can be done for Docker, Singularity, Charliecloud, or runc, just with different commands to shell into the container. Note that for runc, the args in the config.json needs to be:
 
@@ -491,6 +526,7 @@ docker run -it -v $PWD/data:/scif/data:z vanessa/snakemake.scif pyshell
 singularity run --bind data/:/scif/data snakemake.simg pyshell
 ch-run /var/tmp/snakemake.ch -- /opt/conda/bin/scif pyshell
 runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc
+shifter --image=vanessa/snakemake.scif:container-friends --volume `pwd`/data:/scif/data scif pyshell
 ```
 ```
 Found configurations for 4 scif apps
