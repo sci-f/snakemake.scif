@@ -554,3 +554,8 @@ client.run('samtools', args=args)
 ```
 
 This repo is also used as example on the SCIF GitHub repo, so take a [look:](https://github.com/sci-f/snakemake.scif)
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="docs/living-doc.js"></script>
+<link rel="stylesheet" href="docs/living-doc.css">
