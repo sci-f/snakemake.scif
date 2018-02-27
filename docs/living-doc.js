@@ -9,7 +9,7 @@ $(document).ready(function() {
         var start = "<div class='dropdown more'><span><i class='fa fa-ellipsis-h more' title='Edit'></i></span><div class='dropdown-content'>";
 
         // Permalink
-        var link = github + "/#" + did;
+        var link = "https://sci-f.github.io/snakemake.scif/#" + did;
         var button = "<p><a href='" + link + "' target='_blank'>Permalink</a></p>";
         start += button;
 
