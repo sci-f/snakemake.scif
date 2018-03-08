@@ -8,7 +8,7 @@ This repository implements the SnakeMake tutorial workflow and uses the Scientif
 
  - [Docker](https://docs.docker.com/install/)
  - [Singularity](http://singularity.lbl.gov/install-linux)
- - [Charliecloud](https://hpc.github.io/Charliecloud/install.html#manual-build-and-install)
+ - [Charliecloud](https://hpc.github.io/charliecloud/install.html#manual-build-and-install)
  - [runc](https://github.com/opencontainers/runc)
  - [Shifter](https://github.com/NERSC/Shifter-Tutorial/tree/master/examples/shifter-in-a-box)
 
