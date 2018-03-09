@@ -97,7 +97,7 @@ su - auser
 Now we can pull the container that has our analysis stuffs in it:
 
 ```
-shifterimg pull vanessa/snakemake.scif:container-friends
+shifterimg pull vanessa/snakemake.scif
 ```
 
 If you get an error about contacting the gateway, it's a race condition likely, 
@@ -110,7 +110,7 @@ $ rm -rf /data/db/
 $ /src/start.sh
 
 su - auser
-shifterimg pull vanessa/snakemake.scif:container-friends
+shifterimg pull vanessa/snakemake.scif
 ```
 
 After you use `shifterimg pull` and have the image, also as the user, 
@@ -119,7 +119,7 @@ box to mimic binding it to the container).
 
 ```
 su - auser
-git clone -b container-friends https://github.com/sci-f/snakemake.scif
+git clone https://github.com/sci-f/snakemake.scif
 cd snakemake.scif/
 ```
 
@@ -192,7 +192,7 @@ Note that we are working in a container that has had the build step done
 ```
 $ echo $PWD
 /home/auser/snakemake.scif
-shifter --image=vanessa/snakemake.scif:container-friends --volume `pwd`/data:/scif/data bash
+shifter --image=vanessa/snakemake.scif --volume `pwd`/data:/scif/data bash
 $ scif run snakemake all
 ```
 
@@ -258,7 +258,7 @@ technologies are already doing and I just haven't realized it :)
 Note that we are working in a container that has had the build step done (as shown above to pull and clone the repository)
 
 ```
-$ shifter --image=vanessa/snakemake.scif:container-friends --volume `pwd`/data:/scif/data --workdir /scif/data /opt/conda/bin/scif run snakemake all
+$ shifter --image=vanessa/snakemake.scif --volume `pwd`/data:/scif/data --workdir /scif/data /opt/conda/bin/scif run snakemake all
 ```
 
 ## Generate graphical representation of the workflow
@@ -313,13 +313,14 @@ and this would need to be resolved by specifying a different file, or changing t
 file from the initial build.
 
 ```
-runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc[graphviz_create_dag] executing /bin/bash /scif/apps/graphviz_create_dag/scif/runscript /scif/data report.html dag.svg
+runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc
+[graphviz_create_dag] executing /bin/bash /scif/apps/graphviz_create_dag/scif/runscript /scif/data report.html dag.svg
 ```
 
 **Shifter**
 
 ```
-shifter --image=vanessa/snakemake.scif:container-friends --volume `pwd`/data:/scif/data --workdir /scif/data /opt/conda/bin/scif run graphviz_create_dag `pwd` report.html dag.svg
+shifter --image=vanessa/snakemake.scif --volume `pwd`/data:/scif/data --workdir /scif/data /opt/conda/bin/scif run graphviz_create_dag `pwd` report.html dag.svg
 ```
 
 ```
@@ -370,7 +371,7 @@ We are still working in a container that has had the build step done:
 ```
 $ echo $PWD
 /home/auser/snakemake.scif
-shifter --image=vanessa/snakemake.scif:container-friends --volume `pwd`/data:/scif/data bash
+shifter --image=vanessa/snakemake.scif --volume `pwd`/data:/scif/data bash
 $ scif run bwa mem -o [e]SCIF_DATA/mapped_reads/A.sam [e]SCIF_DATA/genome.fa [e]SCIF_DATA/samples/A.fastq
 ```
 
@@ -414,7 +415,7 @@ runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc
 **Outside container, Shifter**
 
 ```
-$ shifter --image=vanessa/snakemake.scif:container-friends --volume `pwd`/data:/scif/data --workdir /scif/data /opt/conda/bin/scif run bwa mem -o [e]SCIF_DATA/mapped_reads/A.sam [e]SCIF_DATA/genome.fa [e]SCIF_DATA/samples/A.fastq
+$ shifter --image=vanessa/snakemake.scif --volume `pwd`/data:/scif/data --workdir /scif/data /opt/conda/bin/scif run bwa mem -o [e]SCIF_DATA/mapped_reads/A.sam [e]SCIF_DATA/genome.fa [e]SCIF_DATA/samples/A.fastq
 ```
 
 ## Sam to Bam Conversion
@@ -461,7 +462,7 @@ We are still working in a container that has had the build step done:
 ```
 $ echo $PWD
 /home/auser/snakemake.scif
-shifter --image=vanessa/snakemake.scif:container-friends --volume `pwd`/data:/scif/data bash
+shifter --image=vanessa/snakemake.scif --volume `pwd`/data:/scif/data bash
 $ scif run samtools view -Sb [e]SCIF_DATA/mapped_reads/A.sam [out] [e]SCIF_DATA/mapped_reads/A.bam
 ```
 
@@ -506,7 +507,7 @@ runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc
 We are still working in a container that has had the build step done:
 
 ```
-$ shifter --image=vanessa/snakemake.scif:container-friends --volume `pwd`/data:/scif/data --workdir /scif/data /opt/conda/bin/scif run samtools view -Sb [e]SCIF_DATA/mapped_reads/A.sam [out] [e]SCIF_DATA/mapped_reads/A.bam
+$ shifter --image=vanessa/snakemake.scif --volume `pwd`/data:/scif/data --workdir /scif/data /opt/conda/bin/scif run samtools view -Sb [e]SCIF_DATA/mapped_reads/A.sam [out] [e]SCIF_DATA/mapped_reads/A.bam
 ```
 
 
@@ -523,7 +524,7 @@ docker run -it -v $PWD/data:/scif/data:z vanessa/snakemake.scif pyshell
 singularity run --bind data/:/scif/data snakemake.simg pyshell
 ch-run /var/tmp/snakemake.ch -- /opt/conda/bin/scif pyshell
 runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc
-shifter --image=vanessa/snakemake.scif:container-friends --volume `pwd`/data:/scif/data scif pyshell
+shifter --image=vanessa/snakemake.scif --volume `pwd`/data:/scif/data scif pyshell
 ```
 ```
 Found configurations for 4 scif apps

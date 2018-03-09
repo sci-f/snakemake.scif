@@ -2,6 +2,7 @@
 *.img
 *.swp
 snakemake
+.snakemake
 .snakemake/*
 data/report.html
 data/mapped_reads/
