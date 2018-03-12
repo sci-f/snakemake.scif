@@ -8,7 +8,7 @@ ADD config.yaml /
 
 ENV PATH /opt/conda/bin:$PATH
 
-RUN apt-get update && apt-get -y install build-essential git
+RUN apt-get update && apt-get -y install build-essential git valgrind time
 
 # Install scif, snakemake
 

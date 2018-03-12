@@ -1,3 +1,35 @@
+%appfiles setup
+    /Snakefile
+    /config.yaml
+%apprun setup
+    if [ ! -e "${SCIF_DATA}/Snakefile" ]; then
+        echo "Copying Snakefile to $SCIF_DATA"
+        cp ${SCIF_APPROOT}/Snakefile ${SCIF_DATA}/Snakefile
+    fi
+    if [ ! -e "${SCIF_DATA}/config.yaml" ]; then
+        echo "Copying config.yaml to $SCIF_DATA"
+        cp ${SCIF_APPROOT}/config.yaml ${SCIF_DATA}/config.yaml
+    fi
+
+%apprun valgrind
+    /bin/bash ${SCIF_APPRUN_setup}
+    cd ${SCIF_DATA}
+    exec valgrind --tool=massif /opt/conda/bin/snakemake all
+    
+%apprun timeit
+    /bin/bash ${SCIF_APPRUN_setup}
+    cd ${SCIF_DATA}
+    exec /usr/bin/time -a -o $TIME_LOG /opt/conda/bin/snakemake all
+
+%appenv timeit
+    TIME='%C\t%E\t%K\t%I\t%M\t%O\t%P\t%U\t%W\t%X\t%e\t%k\t%p\t%r\t%s\t%t\t%w\n'
+    TIME_LOG=/scif/data/snakemake-times.log
+    export TIME TIME_LOG
+%apphelp timeit
+    Run the snakemake pipeline and save a log of timing and metrics.
+    Usage: scif run timeit
+    Log will be written to the main data folder as "snakemake-times.log"
+
 %appinstall bwa
     apt-get -y install wget libbz2-dev zlib1g-dev
     wget https://sourceforge.net/projects/bio-bwa/files/bwa-0.7.17.tar.bz2
@@ -50,23 +82,13 @@
 %apptest samtools
     exec samtools
 
-%appfiles snakemake
-    /Snakefile
-    /config.yaml
 %apphelp snakemake
     Run snakemake. The workflow is defined by a Snakefile that should be located in the $SCIF_DATA folder.
     This app does not provide snakemake itself, because it is already installed in the Singularity/Docker container.
     But it would be easy to install snakemake also in the app context. The Snakefile should be present in the folder.
     If not, we copy the one provided by the snakemake application.
 %apprun snakemake
-    if [ ! -e "${SCIF_DATA}/Snakefile" ]; then
-        echo "Copying Snakefile to $SCIF_DATA"
-        cp ${SCIF_APPROOT}/Snakefile ${SCIF_DATA}/Snakefile
-    fi
-    if [ ! -e "${SCIF_DATA}/config.yaml" ]; then
-        echo "Copying config.yaml to $SCIF_DATA"
-        cp ${SCIF_APPROOT}/config.yaml ${SCIF_DATA}/config.yaml
-    fi
+    /bin/bash ${SCIF_APPRUN_setup}
     cd ${SCIF_DATA}
     /opt/conda/bin/snakemake "$@"
 
