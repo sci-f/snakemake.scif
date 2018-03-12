@@ -19,6 +19,21 @@ The following container technologies don't have user friendly build clients avai
 We will take the following format in each section, to show the same command for each
 container technology, followed by the output that each results in.
 
+## What is here?
+This repository contains the following:
+
+ - [README.md](): is what you are reading, which has the complete walk through of building and running each container. This is the intended use case for this work, as an interactive exercise.
+ - **Container Build Recipes**: [Singularity](Singularity) and [Dockerfile](Dockerfile) are build recipes for Docker and Singularity containers.
+ - **Scientific Applications**: are installed in each container using the same scientific filesystem recipe, [snakemake_tutorial.scif](snakemake_tutorial.scif)
+ - **Workflow** Is provided by using Snakemake. There is a [Snakefile](Snakefile) to define rules and steps, and a small [config.yaml](config.yaml) file to define sample inputs in the [data](data) folder.
+ - **[configs](configs)** is a folder of configuration files for runc, one of the container technologies.
+ - [run_comparison.sh](run_comparison.sh) will run the pipeline for all but Shifter, which needs a Shifter box. This assumes the software for each container is installed and containers are already built, unless the variable `DOBUILD` is set to 1. The results for each run are moved to [results](results).
+ - [measure_comparison.sh](measure_comparison.sh) uses the time command and valgrind to collect runtime metrics, from within the containers.
+ - For Shifter we (manually) went through [run_shifter.sh] to collect both metrics and running because it required running from inside a shifter box.
+ - [asciinema](asciinema) is a totally unecessary folder of asciinemas recorded and text to cat to the screen to make it fun :)
+
+It is recommended to approach this learning exercise reading through the seconds below.
+
 ## Building containers
 
 **Singularity**

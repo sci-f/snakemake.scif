@@ -101,6 +101,4 @@ cat asciinema/friends.txt
 sleep 2
 
 # Shifter
-#clean
-#echo "Shifter pipeline will be run on cluster!"
-#echo "shifter --image=vanessa/snakemake.scif --volume `pwd`/data:/scif/data --workdir /scif/data /opt/conda/bin/scif run snakemake all"
+# Shifter must be done manually to use shifter in a box, see run_shifter.sh
