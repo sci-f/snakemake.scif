@@ -9,6 +9,7 @@
 HERE=$PWD
 DATA=$HERE/data
 RESULT=$HERE/results
+DOBUILD=0
 
 mkdir -p $RESULT
 
@@ -33,8 +34,9 @@ function doBuild() {
 clean
 doBuild "docker build --no-cache -t vanessa/snakemake.scif ."
 docker run -v $PWD/data:/scif/data -it vanessa/snakemake.scif run valgrind
-docker run -v $PWD/data:/scif/data -it vanessa/snakemake.scif run timeit
 mv data/massif.* $RESULT/docker
+clean
+docker run -v $PWD/data:/scif/data -it vanessa/snakemake.scif run timeit
 mv data/snakemake-times.log $RESULT/docker
 sudo chown -R vanessa data/
 
@@ -42,8 +44,9 @@ sudo chown -R vanessa data/
 clean
 doBuild "sudo singularity build snakemake.simg Singularity"
 singularity run --bind data/:/scif/data snakemake.simg run valgrind
-singularity run --bind data/:/scif/data snakemake.simg run timeit
 mv data/massif.* $RESULT/singularity
+clean
+singularity run --bind data/:/scif/data snakemake.simg run timeit
 mv data/snakemake-times.log $RESULT/singularity
 
 # Charliecloud
@@ -52,8 +55,9 @@ doBuild "ch-build -t snakemake.ch ."
 doBuild "ch-docker2tar snakemake.ch /var/tmp"
 doBuild "ch-tar2dir /var/tmp/snakemake.ch.tar.gz /var/tmp"
 ch-run --cd $PWD -b data:/scif/data /var/tmp/snakemake.ch -- /opt/conda/bin/scif run valgrind
-ch-run --cd $PWD -b data:/scif/data /var/tmp/snakemake.ch -- /opt/conda/bin/scif run timeit
 mv data/massif.* $RESULT/charliecloud
+clean
+ch-run --cd $PWD -b data:/scif/data /var/tmp/snakemake.ch -- /opt/conda/bin/scif run timeit
 mv data/snakemake-times.log $RESULT/charliecloud
 
 # Runc
@@ -64,6 +68,7 @@ doBuild "sudo singularity build --sandbox /tmp/runc/rootfs snakemake.simg"
 cp configs/runc-config-valgrind.json /tmp/runc/config.json
 runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc
 mv data/massif.* $RESULT/runc
+clean
 cp configs/runc-config-timeit.json /tmp/runc/config.json
 runc --root /tmp/runc run --bundle /tmp/runc snakmake.runc
 mv data/snakemake-times.log $RESULT/runc
