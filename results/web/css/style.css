@@ -1,0 +1,74 @@
+/* IGNORE THESE */
+html, body, #heatmap {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#heatmap {
+  width: 1200px;
+  padding: 20px;
+  color: white;
+  cursor:pointer;
+}
+
+
+/* But not these */
+.heatmap .heatmap-title {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.heatmap .heatmap-blank-metric {
+  width: 10.0%;
+  padding: 3px;
+  margin: 0.2% 0.2%;
+  color: #999 !important;
+  font-size:10px;
+  text-align: center;
+}
+
+.heatmap .heatmap-metric {
+  width: 10.0%;
+  margin: 0.2% 0.2%;
+  font-size: 10px;
+  text-align: center;
+  padding: 3px;
+  border-radius: 8px;
+  border: 1px solid #
+}
+
+.heatmap .heatmap-actual {
+  padding-top:15px;
+  padding-bottom:15px;
+}
+
+
+.heatmap .heatmap-metric.heatmap-level-1 {
+  background: #90B74F;
+}
+.heatmap .heatmap-metric.heatmap-level-2 {
+  background: #695EC9;
+}
+.heatmap .heatmap-metric.heatmap-level-3 {
+  background: #3E89BB;
+}
+.heatmap .heatmap-metric.heatmap-level-4 {
+  background: #DB94C9;
+}
+.heatmap .heatmap-metric.heatmap-level-5 {
+  background: #CF3E38;
+}
+.heatmap .heatmap-metric.heatmap-level-6 {
+  background: #CB6274;
+}
+.heatmap .heatmap-metric.heatmap-level-7 {
+  background: #D79B28;
+}
+.heatmap .heatmap-metric.heatmap-level-8 {
+  background: #3E77BB;
+}
+.heatmap .heatmap-metric.heatmap-level-9 {
+  background: #DF544C;
+}

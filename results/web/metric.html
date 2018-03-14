@@ -1,0 +1,126 @@
+<html>
+<head>
+    <title>The Scientific Filesystem Across Container Technologies</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/milligram.min.css">
+    <style>
+    .vanessa_icon {
+        border-radius:30px !important;
+        font-size:32 !important;
+        font-weight:600 !important;
+        padding:0px 10px 0px 10px !important;
+    }
+    </style>
+</head>
+<body>
+
+<div class="container" style="padding-top:20px">
+    <div class="row">
+        <div class="column">
+            <a href="/">
+                <h2>The Scientific Filesystem Across Container Technologies</h2>
+            </a>
+            <fieldset>
+                <label for="metric">Metric</label>
+                <select name="metric" id="metric">
+                    <option value="CONTEXT_SWITCHES">Context Switches</option>
+                    <option value="CPU_SECONDS_USED">CPU Seconds Used</option>
+                    <option value="ELAPSED_TIME_SEC">Elapsed time (seconds)</option>
+                    <option value="FS_INPUTS">File System Inputs</option>
+                    <option value="FS_OUTPUTS">File System Outputs</option>
+                    <option value="MAX_RES_SIZE_KB">Max Res Size (Memory) in KB</option>
+                    <option value="PERC_CPU_ALLOCATED">Percent CPU Allocated</option>
+                </select>
+            </fieldset>
+
+        </div>
+    </div>
+    <h2 id="the_title"></h2>
+    <div id="plot"></div>
+
+    <!-- Information -->
+    <div class="row" style="padding-top:50px">
+        <a id="toggleme" style="font-size:32px" class="button vanessa_icon">?</a>
+        <div id="showme" class="column hidden" style="display:none">
+            <p>This project aimed to compare the same <a href="https://github.com/sci-f/snakemake.scif" target="_blank">scientific workflow</a> across different container technologies. The focus isn't on the trivial differences between running metrics and resource uses - and matter of fact we can see from the plots they really are trivial - but rather that the same goals can be achieved <a href="https://sci-f.github.io/snakemake.scif">across container technologies</a>. The <a href="https://sci-f.github.io" target="_blank">Scientific Filesystem</a> specification makes this possible, and emphasizes a focus on user experience to develop and deploy modular, reproducible software applications.</p>
+        </div>
+    </div>
+
+    <div class="clearfix">
+
+        <!-- Float either directions -->
+        <div class="float-right"></div>
+
+    </div>
+
+</div>
+</body>
+
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src='js/plotly.min.js'></script>
+<script>
+
+function load_data(metric) {
+
+  var filename = "data/" + metric + ".json"
+
+  // Replace page title with data name
+  $("#the_title").text(metric)     
+
+  $.getJSON( filename, function( data ) {
+     console.log('HALLO MOTO!')
+     var layout = {barmode: 'group'};
+     Plotly.newPlot('plot', data, layout);
+  });
+}
+
+// Function to get parameter from the url
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+
+$(document).ready(function(){
+
+   var metric = getUrlParameter('metric')
+   console.log(metric)
+
+   if (typeof metric == 'undefined') {
+       var metric = "CONTEXT_SWITCHES"
+   }
+
+   // Make sure drop downs set correctly
+   $("#metric").val(metric);
+   load_data(metric);
+
+   // Show info if user wants to see it
+   $("#toggleme").click(function(){
+      if ($("#showme").hasClass("hidden")){
+          $("#showme").removeClass('hidden');
+          $("#showme").show();
+      } else {
+          $("#showme").addClass('hidden');
+          $("#showme").hide();
+      }
+   })
+
+   $("#metric").change(function(){
+      var metric = $("#metric").val();
+      load_data(metric);
+   })
+
+})
+
+</script>
+</html>
