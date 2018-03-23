@@ -77,3 +77,9 @@ mv data/snakemake-times.log $RESULT/runc
 clean
 #echo "Shifter pipeline will be run on cluster!"
 #echo "shifter --image=vanessa/snakemake.scif --volume `pwd`/data:/scif/data --workdir /scif/data /opt/conda/bin/scif run snakemake all"
+
+# Just show files / results are the same!
+diff results/docker/calls.vcf results/singularity/calls.vcf
+diff results/docker/calls.vcf results/runc/calls.vcf
+diff results/docker/calls.vcf results/shifter/calls.vcf
+diff results/docker/calls.vcf results/charliecloud/calls.vcf
