@@ -133,12 +133,18 @@ and `n1-highcpu-16`. Here is the latter:
 
 ![bucket/img/n1-highcpu-16.png](bucket/img/n1-highcpu-16.png)
 
+
 ## Next Steps
-What do I want to do? I want to make a template that a general user can use, intended for
-the Singularityhub builder! Specifically:
+I don't think these results are particularly interesting. I am relieved to find a relatively 
+deterministic analysis that doesn't require substantial memory to run consistently when built
+and run across cloud environments with only slight variation in the memory. But this begs to ask,
+what is important? What do HPC admins and scientists care about?
+
+What do I want to do? I want to make a template that a general user can use to assess
+"if I do this once, and then another time with varying of X" what changes. Specifically:
 
  - the user should put a test that produces some output to run in the `%test` section.
  - the container will be built from the same secure build
- - output data should be put in a `data` folder in the root of the repository with the Singularity recipe.
+ - outputs of interest, along with the container, can be sent to a storage of choice for further analysis. We can also throw them away and just capture metrics.
 
-Then we can have a launcher of sorts that will launch the build across some number of platforms, starting with variables like the machine varied, and then having variables related to the analysis varied.
+Then we can have a launcher of sorts that will launch the build across some number of platforms, starting with variables like the machine varied, and then having variables related to the analysis varied. Now if only I knew what kinds of variables are actually important... have any ideas?
