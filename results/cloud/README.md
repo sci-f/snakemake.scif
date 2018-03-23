@@ -19,6 +19,7 @@ export SREGISTRY_CLIENT=google-compute
 export SREGISTRY_BUILDER_REPO=https://vsoch.github.io/builders
 ```
 
+## Method
 Now look at templates available, there should be minimally two!
 
 ```
@@ -118,6 +119,8 @@ The instance names are amazing.
 And this could definitely be run more elegantly from a script, but I figured I'd bash it out :)
 We could have put the variables in a loop, but I took
 the approach of one config file per launch so that I could have them hard coded.
+
+## Results
 
 I then downloaded the .tar.gz files in the Storage Console (because it was easy enough)
 and was able to compare the valgrind plots with the viewer. I am showing these plots quickly
