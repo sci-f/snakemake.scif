@@ -1,0 +1,64 @@
+{
+    "data": {
+        "author": "Vanessa Sochat",
+        "config": {
+            "disks": [],
+            "labels": [
+                {
+                    "key": "sregistry",
+                    "value": "builder"
+                }
+            ],
+            "networkInterfaces": [
+                {
+                    "accessConfigs": [
+                        {
+                            "name": "External NAT",
+                            "type": "ONE_TO_ONE_NAT"
+                        }
+                    ],
+                    "network": "global/networks/default"
+                }
+            ],
+            "serviceAccounts": [
+                {
+                    "email": "default",
+                    "scopes": [
+                        "https://www.googleapis.com/auth/compute",
+                        "https://www.googleapis.com/auth/devstorage.read_write",
+                        "https://www.googleapis.com/auth/logging.write"
+                    ]
+                }
+            ],
+            "tags": {
+                "items": [
+                    "http-server",
+                    "https-server"
+                ]
+            }
+        },
+        "id": "/cloud/google/compute/ubuntu/metrics/securebuild-2.4.3",
+        "metadata": {
+            "GOOGLE_COMPUTE_IMAGE_FAMILY": "debian-8",
+            "GOOGLE_COMPUTE_PROJECT": "debian-cloud",
+            "SINGULARITY_BRANCH": "feature-squashbuild-secbuild-2.4.3",
+            "SINGULARITY_REPO": "https://github.com/cclerget/singularity.git",
+            "SREGISTRY_BUILDER_machine_type": "n1-highcpu-2",
+            "SREGISTRY_GOOGLE_STORAGE_PRIVATE": "false"
+        },
+        "path": "_cloud/google/compute/ubuntu/metrics/securebuild-2.4.3.json",
+        "repo": "https://www.github.com/vsoch/builders",
+        "tags": [
+            "ubuntu",
+            "singularity",
+            "valgrind",
+            "time",
+            "metrics",
+            "google-compute",
+            "google-storage"
+        ]
+    },
+    "links": {
+        "self": "https://vsoch.github.io/builders/cloud/google/compute/ubuntu/metrics/securebuild-2.4.3"
+    }
+}
