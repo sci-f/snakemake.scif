@@ -120,7 +120,15 @@ We could have put the variables in a loop, but I took
 the approach of one config file per launch so that I could have them hard coded.
 
 I then downloaded the .tar.gz files in the Storage Console (because it was easy enough)
-and was able to compare the valgrind plots with the viewer.
+and was able to compare the valgrind plots with the viewer. I am showing these plots quickly
+because... *drumroll* I just didn't see any significant differences. 
+
+![differences-fast.gif](differences-fast.gif)
+
+The only slightly interesting thing was a spike in memory at around 3 seconds, which can be seen for `n1-standard-4`
+and `n1-highcpu-16`. Here is the latter:
+
+![bucket/img/n1-highcpu-16.png](bucket/img/n1-highcpu-16.png)
 
 ## Next Steps
 What do I want to do? I want to make a template that a general user can use, intended for
