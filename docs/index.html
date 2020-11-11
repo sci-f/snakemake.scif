@@ -7,15 +7,23 @@
 </head>
 <body style="background-color:#002733">
 <div style="position: fixed; z-index: 100; right: 25px; top:20px; color:white; font-variant:small-caps; text-decoration: none;">
-  <a href="https://sci-f.github.io/snakemake.scif/results/">MORE</a>
+  <input type="button" value="PLAY" onclick="play()">
+  <a href="https://sci-f.github.io/snakemake.scif/results/"><input type="button" value="MORE"></a>
 </div>
 <div style="position: fixed; z-index: -99; width: 100%; height: 100%">
   <a href="https://www.github.com/sci-f/snakemake.scif" target="_blank">
       <img src="run-friends.gif" style="margin:auto; height: 100%; z-index:100;">
   </a>  
 </div>
-<audio autoplay loop>
-    <source src="friends.mp3">
+
+
+<script>
+function play() {
+    var audio = document.getElementById("audio");
+    audio.play();
+}
+</script>
+<audio id="audio" src="friends.mp3"></audio>
 </audio>
 </body>
 </html>
